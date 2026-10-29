@@ -135,7 +135,7 @@ class DoubleLinkedList {
   //   get the node by index
   get(index) {
     // check that index is valid or nto
-    if (index < 0 || !index || index >= this.length) return undefined;
+    if (index < 0 || index >= this.length) return undefined;
 
     // pointer for tracking node
     let i = 0;
@@ -155,7 +155,7 @@ class DoubleLinkedList {
   //   change the node value at specific index
   set(index, value) {
     // check that index is valid or not
-    if (!index || index < 0 || index >= this.length) return undefined;
+    if (index < 0 || index >= this.length) return undefined;
 
     // get current node
     const currentNode = this.get(index);
@@ -169,6 +169,47 @@ class DoubleLinkedList {
 
     // return the curren node
     return currentNode;
+  }
+
+  // insert node at specific location
+  insert(index, value) {
+    // check that if index is valid or not
+    if (index < 0 || index >= this.length) return undefined;
+
+    // if index is zero use unshift method
+    if (index === 0) {
+      console.log("inside the first if");
+      return this.unshift(value);
+    }
+
+    // if index is at the end use push method
+    if (index === this.length - 1) {
+      console.log("inside the second if");
+      return this.push(value);
+    }
+
+    // get the previous node
+    const previousNode = this.get(index - 1);
+    // check that if previous node is found or not
+    if (!previousNode) {
+      return undefined;
+    }
+
+    // get the currentNode
+    const currentNode = previousNode.next;
+
+    // create a new node
+    const newNode = new Node(value);
+
+    // update the previous and next pointer of newNode
+    newNode.next = currentNode;
+    newNode.prev = previousNode;
+    // update the next and previous pointer of previous and current node
+    previousNode.next = newNode;
+    currentNode.prev = newNode;
+
+    // return updated list
+    return this;
   }
 }
 
@@ -189,4 +230,6 @@ list.push("Yash Gami");
 
 // console.log(list.get(2));
 // console.log(list.set(2, "Yash Darji"));
+
+console.log(list.insert(1, "Yash Darji"));
 console.log(list);
