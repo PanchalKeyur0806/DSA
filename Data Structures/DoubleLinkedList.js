@@ -71,6 +71,36 @@ class DoubleLinkedList {
     // return the deleted tail
     return deletedTail;
   }
+
+  //   shift method to double linked list
+  shift() {
+    // if there is no head, return undefined
+    if (!this.head) return undefined;
+
+    // if list length is one, remove head and tail from the list
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      this.length--;
+      return this;
+    }
+
+    // get the head that needs to be deleted
+    const deletedHead = this.head;
+
+    // assign a deletedHead.next to new head
+    this.head = deletedHead.next;
+    // remove the previous node of newly created head
+    this.head.prev = null;
+    // remove all the previous pointer of deletedHead
+    deletedHead.prev = null;
+
+    // decrease the length
+    this.length--;
+
+    // return deleted head
+    return deletedHead;
+  }
 }
 
 const list = new DoubleLinkedList();
@@ -79,7 +109,9 @@ list.push("Manish");
 list.push("Vatsal");
 list.push("Yash Gami");
 
-list.pop();
+// list.pop();
 
-console.log(list.head.next.next);
+list.shift();
+
+// console.log(list.head.next);
 console.log(list);
