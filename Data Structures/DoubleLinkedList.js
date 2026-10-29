@@ -131,6 +131,45 @@ class DoubleLinkedList {
     // return
     return this;
   }
+
+  //   get the node by index
+  get(index) {
+    // check that index is valid or nto
+    if (index < 0 || !index || index >= this.length) return undefined;
+
+    // pointer for tracking node
+    let i = 0;
+    // get the first element of the head
+    let currentNode = this.head;
+
+    // loop untill index reaches targeted place
+    while (i !== index) {
+      currentNode = currentNode.next;
+      i++;
+    }
+
+    // return currentNode
+    return currentNode;
+  }
+
+  //   change the node value at specific index
+  set(index, value) {
+    // check that index is valid or not
+    if (!index || index < 0 || index >= this.length) return undefined;
+
+    // get current node
+    const currentNode = this.get(index);
+    // if node not found return undefined
+    if (!currentNode) {
+      return undefined;
+    }
+
+    // change the node value
+    currentNode.value = value;
+
+    // return the curren node
+    return currentNode;
+  }
 }
 
 const list = new DoubleLinkedList();
@@ -144,7 +183,10 @@ list.push("Yash Gami");
 // list.shift();
 // list.shift()
 
-list.unshift("Yash Darji");
+// list.unshift("Yash Darji");
 
-console.log(list.head.next);
+// console.log(list.head.next);
+
+// console.log(list.get(2));
+// console.log(list.set(2, "Yash Darji"));
 console.log(list);
