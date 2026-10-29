@@ -101,6 +101,36 @@ class DoubleLinkedList {
     // return deleted head
     return deletedHead;
   }
+
+  // unshift method
+  unshift(value) {
+    // create a new Node
+    const newNode = new Node(value);
+
+    // if head doesn't found, assign new node to head and tail
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      // get the current head
+      const currentHead = this.head;
+
+      // assign a new node to head
+      this.head = newNode;
+
+      // assign newNode.next to currentHead
+      newNode.next = currentHead;
+
+      // update the previous pointer of currentHead
+      currentHead.prev = newNode;
+    }
+
+    // increase the length
+    this.length++;
+
+    // return
+    return this;
+  }
 }
 
 const list = new DoubleLinkedList();
@@ -111,7 +141,10 @@ list.push("Yash Gami");
 
 // list.pop();
 
-list.shift();
+// list.shift();
+// list.shift()
 
-// console.log(list.head.next);
+list.unshift("Yash Darji");
+
+console.log(list.head.next);
 console.log(list);
