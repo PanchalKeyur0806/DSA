@@ -178,13 +178,11 @@ class DoubleLinkedList {
 
     // if index is zero use unshift method
     if (index === 0) {
-      console.log("inside the first if");
       return this.unshift(value);
     }
 
     // if index is at the end use push method
     if (index === this.length - 1) {
-      console.log("inside the second if");
       return this.push(value);
     }
 
@@ -208,8 +206,52 @@ class DoubleLinkedList {
     previousNode.next = newNode;
     currentNode.prev = newNode;
 
-    // return updated list
-    return this;
+    this.length++;
+
+    // return newly added node
+    return newNode;
+  }
+
+  // remove node at specific index
+  remove(index) {
+    // check that index is valid or not
+    if (index < 0 || index >= this.length) return undefined;
+
+    // if index is zero then remove the head
+    if (index === 0) {
+      return this.shift();
+    }
+
+    // if index is the length of list, remove the tail
+    if (index === this.length - 1) {
+      return this.pop();
+    }
+
+    // get previousNode
+    const previousNode = this.get(index - 1);
+    // if previous node not found return undefined
+    if (!previousNode) {
+      return undefined;
+    }
+
+    // get the node to be removed
+    const removedNode = previousNode.next;
+    // get the next node of removedNode
+    const nextNode = removedNode.next;
+
+    // update the poiner of previous and next node
+    previousNode.next = nextNode;
+    nextNode.prev = previousNode;
+
+    // update the pointer of removed node
+    removedNode.next = null;
+    removedNode.prev = null;
+
+    // decrease the length of double linked list
+    this.length--;
+
+    // return the removed node
+    return removedNode;
   }
 }
 
@@ -231,5 +273,9 @@ list.push("Yash Gami");
 // console.log(list.get(2));
 // console.log(list.set(2, "Yash Darji"));
 
-console.log(list.insert(1, "Yash Darji"));
+// console.log(list.insert(1, "Yash Darji"));
+
+// console.log(list.insert(0, "Yash Vyas"));
+
+// console.log(list.remove(1));
 console.log(list);
