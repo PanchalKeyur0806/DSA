@@ -40,11 +40,46 @@ class DoubleLinkedList {
     // return
     return this;
   }
+
+  pop() {
+    // if head doesn't found return undefined
+    if (!this.head) return undefined;
+
+    // if there is only one element in the list
+    // remove it
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      this.length--;
+      return this;
+    }
+
+    // get the current tail
+    // this tail is needed to be removed
+    let deletedTail = this.tail;
+
+    // assign a deletedTail.prev node to new tail
+    this.tail = deletedTail.prev;
+    // remove the next pointer of newly created tail
+    this.tail.next = null;
+    // remove the all previous pointer of deletedTail
+    deletedTail.prev = null;
+
+    // decrease the length
+    this.length--;
+
+    // return the deleted tail
+    return deletedTail;
+  }
 }
 
 const list = new DoubleLinkedList();
 list.push("Keyur");
 list.push("Manish");
-console.log(list.push("Vatsal"));
+list.push("Vatsal");
+list.push("Yash Gami");
 
-// console.log(list);
+list.pop();
+
+console.log(list.head.next.next);
+console.log(list);
