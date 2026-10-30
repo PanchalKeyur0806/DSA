@@ -51,6 +51,30 @@ class BinarySearchTree {
     return this.ifExists(value, currentNode);
   }
 
+  //   find the minimum node in binary search tree
+  min() {
+    // if root doesn't found
+    if (!this.root) return undefined;
+
+    // get the root node
+    let currentNode = this.root;
+
+    // use recursive function for finding minimum node
+    return this.findMin(currentNode);
+  }
+
+  //   find the maximum node in binary search tree
+  max() {
+    // if root doesn't found
+    if (!this.root) return undefined;
+
+    // get current root node
+    let currentNode = this.root;
+
+    // use recursive fucntion for finding maximum node
+    return this.findMax(currentNode);
+  }
+
   //   recursive function for adding value to binary search tree
   addValue(value, node) {
     // if value is less than current node value, then insert it on left
@@ -127,6 +151,30 @@ class BinarySearchTree {
     // if value doesn't found return false
     return false;
   }
+
+  //   recursive function for finding minimum node
+  findMin(node) {
+    // if there is no left node, return the current node
+    if (!node.left) {
+      return node;
+    }
+
+    // loop untill it found minimum node
+    if (node.left) {
+      return this.findMin(node.left);
+    }
+  }
+
+  //   recursive function for finding max node
+  findMax(node) {
+    // if there is no right node, return the current node
+    if (!node.right) {
+      return node;
+    }
+
+    // loop untill it found max node
+    return this.findMax(node.right);
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -146,3 +194,5 @@ bst.insert(46);
 console.log(JSON.stringify(bst, null, 4));
 console.log(bst.find(201));
 console.log(bst.contains(11));
+console.log(bst.min());
+console.log(bst.max());
