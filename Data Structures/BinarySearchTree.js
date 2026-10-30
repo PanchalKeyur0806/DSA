@@ -198,6 +198,37 @@ class BinarySearchTree {
     // calculate
     return 1 + Math.max(left, right);
   }
+
+  //   Breadth Dept Search
+  bdf() {
+    // if there is no root, return undefined
+    if (!this.root) return undefined;
+
+    // get the root node
+    let node = this.root;
+
+    // craete queue and data
+    let queue = [];
+    let data = [];
+
+    // push current node to queue
+    queue.push(node);
+
+    // loop untill there are data in Queue
+    while (queue.length) {
+      // remove the first node
+      node = queue.shift();
+      // push removed data to data array
+      data.push(node.value);
+
+      //   if there is left node in currentNode, push it on queue
+      if (node.left) queue.push(node.left);
+      //   if there is right node in currentNode, push it on queue
+      if (node.right) queue.push(node.right);
+    }
+
+    return data;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -221,3 +252,7 @@ console.log(bst.min());
 console.log(bst.max());
 
 console.log(bst.height());
+
+console.log(bst.bdf());
+// Expected Output
+// [45, 12, 199, 11, 29, 68, 200, 10, 46, 2002, 1, 2005];
