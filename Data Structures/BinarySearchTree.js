@@ -39,6 +39,18 @@ class BinarySearchTree {
     return this.searchNode(value, currentNode);
   }
 
+  //   function for checking weather value exists in the node or not
+  contains(value) {
+    // if root not found, return false
+    if (!this.root) return false;
+
+    // get the root node
+    let currentNode = this.root;
+
+    // use recursive function to search the value
+    return this.ifExists(value, currentNode);
+  }
+
   //   recursive function for adding value to binary search tree
   addValue(value, node) {
     // if value is less than current node value, then insert it on left
@@ -90,6 +102,31 @@ class BinarySearchTree {
     // if value is bigger than node avlue, use recursive fucntion to find node at right side of the node
     return this.searchNode(value, node.right);
   }
+
+  //   recursive function for finding value
+  ifExists(value, node) {
+    // if value is same as node value, return true
+    if (value === node.value) {
+      return true;
+    }
+
+    // if value is less than node value, use recursive function on left side
+    if (value < node.value) {
+      if (node.left) {
+        return this.ifExists(value, node.left);
+      }
+    }
+
+    // if value is bigger than node value, use recursive function on right side
+    if (value > node.value) {
+      if (node.right) {
+        return this.ifExists(value, node.right);
+      }
+    }
+
+    // if value doesn't found return false
+    return false;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -108,3 +145,4 @@ bst.insert(46);
 
 console.log(JSON.stringify(bst, null, 4));
 console.log(bst.find(201));
+console.log(bst.contains(11));
