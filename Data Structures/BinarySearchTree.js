@@ -75,6 +75,13 @@ class BinarySearchTree {
     return this.findMax(currentNode);
   }
 
+  //   function for finding total height of binary search tree
+  height() {
+    if (!this.root) return -1;
+
+    return this.getHeight(this.root);
+  }
+
   //   recursive function for adding value to binary search tree
   addValue(value, node) {
     // if value is less than current node value, then insert it on left
@@ -175,6 +182,22 @@ class BinarySearchTree {
     // loop untill it found max node
     return this.findMax(node.right);
   }
+
+  getHeight(node) {
+    // check that node exists or not
+    if (node === null) {
+      return 0;
+    }
+
+    // loop through left side of the node
+    const left = this.getHeight(node.left);
+
+    // loop through right side of the node
+    const right = this.getHeight(node.right);
+
+    // calculate
+    return 1 + Math.max(left, right);
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -196,3 +219,5 @@ console.log(bst.find(201));
 console.log(bst.contains(11));
 console.log(bst.min());
 console.log(bst.max());
+
+console.log(bst.height());
