@@ -229,6 +229,25 @@ class BinarySearchTree {
 
     return data;
   }
+
+  DPFPreorder() {
+    if (!this.root) return undefined;
+
+    let data = [];
+
+    let currentNode = this.root;
+
+    function traverse(node) {
+      data.push(node.value);
+      
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(currentNode);
+
+    return data;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -256,3 +275,5 @@ console.log(bst.height());
 console.log(bst.bdf());
 // Expected Output
 // [45, 12, 199, 11, 29, 68, 200, 10, 46, 2002, 1, 2005];
+
+console.log(bst.DPFPreorder());
