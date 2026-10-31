@@ -239,13 +239,42 @@ class BinarySearchTree {
 
     function traverse(node) {
       data.push(node.value);
-      
+
       if (node.left) traverse(node.left);
       if (node.right) traverse(node.right);
     }
 
     traverse(currentNode);
 
+    return data;
+  }
+
+  // Depth first search preorder
+  DFSInOrder() {
+    // if root not found, return undefined
+    if (!this.root) return undefined;
+
+    // variable used to stored nodes visited
+    let data = [];
+    // get current root node
+    let current = this.root;
+
+    // recursive function for finding node
+    function traverse(node) {
+      // loop untill all left nodes are finished
+      if (node.left) traverse(node.left);
+
+      // push not to data variable
+      data.push(node.value);
+
+      // loop untill all right nodes are finished
+      if (node.right) traverse(node.right);
+    }
+
+    // calls recursive function
+    traverse(current);
+
+    // return data
     return data;
   }
 }
@@ -277,3 +306,4 @@ console.log(bst.bdf());
 // [45, 12, 199, 11, 29, 68, 200, 10, 46, 2002, 1, 2005];
 
 console.log(bst.DPFPreorder());
+console.log(bst.DFSInOrder());
