@@ -277,6 +277,63 @@ class BinarySearchTree {
     // return data
     return data;
   }
+
+  // counts total nodes
+  totalNodes() {
+    const data = this.DFSInOrder();
+    return data.length;
+  }
+
+  // function for finding successor
+  findSuccessor(value) {
+    // if root node and value doesn't found return undefiend
+    if (!this.root) return undefined;
+    if (!value) return undefined;
+
+    // get the root node
+    let current = this.root;
+    // create a successor variable, this variable is used for fidning successor of node
+    // this variable tracks the parent node
+    let successor = null;
+
+    // CASE 2
+    // loop untill value is found
+    while (current && current.value !== value) {
+      // if value is smaller than current node value
+      if (value < current.value) {
+        // if left side of node exists on current node
+        if (current.left) {
+          successor = current;
+          current = current.left;
+        }
+      }
+      // if value is bigger than current node value
+      else if (value > current.value) {
+        // go to right side of binary search tree
+        if (current.right) {
+          current = current.right;
+        }
+      }
+    }
+
+    //  CASE 1
+    // if current node have right node, and that right node have left node, loop through this left node return the node when there is no longer left node
+    if (current.right) {
+      // switch to right node
+      current = current.right;
+
+      // loop untill there is no more left node left
+      while (current.left) {
+        current = current.left;
+      }
+
+      // return the left node, else return undefiend
+      return current || undefined;
+    }
+
+    // return the successor node, this only returns when case 2 is performed
+    return successor || undefined;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -307,3 +364,5 @@ console.log(bst.bdf());
 
 console.log(bst.DPFPreorder());
 console.log(bst.DFSInOrder());
+console.log(bst.totalNodes());
+console.log(bst.findSuccessor(29));
