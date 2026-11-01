@@ -382,6 +382,47 @@ class BinarySearchTree {
     // return the predecessor
     return predecessor || undefined;
   }
+
+  // check weather this is valid binary search tree or not
+  isValidBst() {
+    // if root element node found, return undefiend
+    if (!this.root) return undefined;
+
+    // defiene the scope of minimum and maximum value
+    let minimum = -Infinity;
+    let maximum = Infinity;
+
+    // get the current node
+    let current = this.root;
+
+    // check weather node value is valid or not
+    if (current.value >= maximum && current.value <= minimum) {
+      return false;
+    }
+
+    // recursive function for validating the values
+    function traverse(node, min, max) {
+      // if node doesn't found return true
+      if (node === null) {
+        return true;
+      }
+
+      // check values
+      if (node.value <= min || node.value >= max) {
+        return false;
+      }
+
+      // call the recursive function
+      return (
+        traverse(node.left, min, node.value) &&
+        traverse(node.right, node.value, max)
+      );
+    }
+
+    return traverse(current, minimum, maximum);
+
+    // return { minimum, maximum };
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -415,3 +456,4 @@ console.log(bst.DFSInOrder());
 console.log(bst.totalNodes());
 console.log(bst.findSuccessor(10));
 console.log("Predecessor of given node is : ", bst.findPredecessor(11));
+console.log(bst.isValidBst());
