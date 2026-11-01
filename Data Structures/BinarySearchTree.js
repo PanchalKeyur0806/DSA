@@ -316,6 +316,8 @@ class BinarySearchTree {
       }
     }
 
+    if (!current) return undefined;
+
     //  CASE 1
     // if current node have right node, and that right node have left node, loop through this left node return the node when there is no longer left node
     if (current.right) {
@@ -327,12 +329,58 @@ class BinarySearchTree {
         current = current.left;
       }
 
-      // return the left node, else return undefiend
+      // return the current node, else return undefiend
       return current || undefined;
     }
 
     // return the successor node, this only returns when case 2 is performed
     return successor || undefined;
+  }
+
+  // find predecessor of given node
+  findPredecessor(value) {
+    // if value and root doesn't exists, return undefiend
+    if (!value) return undefined;
+    if (!this.root) return undefined;
+
+    // get the current root node
+    let current = this.root;
+    // variable that tracks the parent of right node
+    let predecessor = null;
+
+    // find the node
+    while (current && current.value !== value) {
+      // if value is smaller than current node value, move to left
+      // else move to right side of subtree and assign that previous node as predecessor
+      if (value < current.value) {
+        if (current.left) {
+          current = current.left;
+        } else {
+          predecessor = current;
+          current = current.right;
+        }
+      }
+    }
+
+    // return undefiend if node doesn't exists
+    if (!current) return undefined;
+
+    // check that if there is any left node in current node
+    if (current.left) {
+      // move to left side of the node
+      current = current.left;
+
+      // loop untill it founds the bottom right side of the node
+      while (current.right) {
+        current = current.right;
+      }
+
+      // return the current node
+      return current;
+    }
+
+    // return the predecessor
+    return predecessor || undefined;
   }
 }
 
@@ -365,4 +413,5 @@ console.log(bst.bdf());
 console.log(bst.DPFPreorder());
 console.log(bst.DFSInOrder());
 console.log(bst.totalNodes());
-console.log(bst.findSuccessor(29));
+console.log(bst.findSuccessor(10));
+console.log("Predecessor of given node is : ", bst.findPredecessor(11));
