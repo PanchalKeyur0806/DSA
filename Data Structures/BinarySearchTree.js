@@ -423,6 +423,80 @@ class BinarySearchTree {
 
     // return { minimum, maximum };
   }
+
+  // counts total leaf nodes
+  countLeafNodes() {
+    // if root doesn't exists return zero
+    if (!this.root) return 0;
+
+    // get the root
+    let current = this.root;
+
+    // countLeaf function for finding total leaf nodes
+    return this.countLeaf(current);
+  }
+
+  // helper function for finding leaf node
+  countLeaf(node) {
+    // if node is null, return zero
+    if (node === null) {
+      return 0;
+    }
+
+    // if there is left and right node of current node
+    // return 1
+    if (node.left === null && node.right === null) {
+      return 1;
+    }
+
+    // get the total nodes count using recursive function
+    const left = this.countLeaf(node.left);
+    const right = this.countLeaf(node.right);
+
+    return left + right;
+  }
+
+  // counts total non leaf nodes
+  countNonLeafNode() {
+    // if root doesn't exists return zero
+    if (!this.root) return 0;
+
+    // get teh current root
+    let current = this.root;
+    // set counter to zero
+    let counter = 0;
+
+    // use countNonLeaf function
+    return this.countNonLeaf(current, counter);
+  }
+
+  // helper function for finding total nonleaf node on bianry search tree
+  countNonLeaf(node, counter) {
+    // if node doesn't exists increememnt coutner by zero
+    if (node === null) {
+      counter += 0;
+      return counter;
+    }
+
+    // if there is left and right node in current node
+    // increment counter by one
+    if (node.left || node.right) {
+      counter += 1;
+    }
+
+    // if there is left node, use recursive function on that
+    if (node.left) {
+      counter = this.countNonLeaf(node.left, counter);
+    }
+
+    // if there is right node, use recursive function on that
+    if (node.right) {
+      counter = this.countNonLeaf(node.right, counter);
+    }
+
+    // return coutner
+    return counter;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -457,3 +531,5 @@ console.log(bst.totalNodes());
 console.log(bst.findSuccessor(10));
 console.log("Predecessor of given node is : ", bst.findPredecessor(11));
 console.log(bst.isValidBst());
+console.log(bst.countLeafNodes());
+console.log(bst.countNonLeafNode());
