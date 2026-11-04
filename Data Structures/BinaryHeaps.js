@@ -12,6 +12,25 @@ class MaxBinaryHeap {
     this.bubbleUp();
   }
 
+  // function for removing maximum value
+  extractMax() {
+    // get the first element
+    let max = this.values[0];
+    // remove the last elemetn
+    let end = this.values.pop();
+
+    // if length is bigger than zero
+    if (this.values.length > 0) {
+      // add last element to the top
+      this.values[0] = end;
+      // use shrinkDown function
+      this.shrinkDown();
+    }
+
+    // return deleted element
+    return max;
+  }
+
   // helper function of insert
   bubbleUp() {
     // get the index of newly inserted value
@@ -41,9 +60,77 @@ class MaxBinaryHeap {
       index = parentIdx;
     }
   }
+
+  // helper function for removing the element
+  shrinkDown() {
+    let index = 0;
+    // get the element by index
+    let element = this.values[0];
+    // get the total length of the binaryheap
+    let length = this.values.length;
+
+    // run untill loop breaks
+    while (true) {
+      // get the left and right child index
+      let leftChildIdx = 2 * index + 1;
+      let rightChildIdx = 2 * index + 2;
+
+      // create left and right child variable
+      let leftChild, rightChild;
+      // variable is used for tracking the index
+      // this is used for swapping elements
+      let swap = null;
+
+      // check that left child index is valid
+      if (leftChildIdx < length) {
+        // get the left child element
+        leftChild = this.values[leftChildIdx];
+
+        // if left child is bigger than current element
+        if (leftChild > element) {
+          // store left child index to swap variable
+          swap = leftChildIdx;
+        }
+      }
+
+      // check that right side index is valid
+      if (rightChildIdx < length) {
+        // get the right child element
+        rightChild = this.values[rightChildIdx];
+
+        // first condition checks, if right element is bigger than current element, and swap should be null
+        // second condition checks if right side of the element is bigger than left side element
+        if (
+          (swap === null && rightChild > element) ||
+          (swap !== null && rightChild > leftChild)
+        ) {
+          // store the right child element index to swap variable
+          swap = rightChildIdx;
+        }
+      }
+
+      // if elements are not swapped then break the loop
+      // all the items are in correct order
+      if (swap === null) break;
+
+      // swap the values
+      this.values[index] = this.values[swap];
+      this.values[swap] = element;
+
+      // update the index variable to swap
+      // now second time loop with start with swapped index
+      index = swap;
+    }
+  }
 }
 
 const binaryHeap = new MaxBinaryHeap();
 console.log(binaryHeap.insert(55));
 console.log(binaryHeap.insert(56));
+console.log(binaryHeap.values);
+
+console.log(binaryHeap.extractMax());
+console.log(binaryHeap.values);
+
+console.log(binaryHeap.extractMax());
 console.log(binaryHeap.values);
