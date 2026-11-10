@@ -44,6 +44,31 @@ class Graph {
       this.adjacencyList[vertext2] = removed;
     }
   }
+
+  // function for getting current vertext
+  getVertext(vertex) {
+    // check that vertext is on list or not, if not reutrn undeifend
+    if (!this.adjacencyList[vertex]) {
+      return undefined;
+    }
+
+    // return the vertex
+    return this.adjacencyList[vertex];
+  }
+
+  // function for removing vertext from list
+  removeVertext(vertext) {
+    // loop untill vertext as zero edges
+    while (this.adjacencyList[vertext].length) {
+      // remove the edges from the list
+      const adjVertext = this.adjacencyList[vertext].pop();
+
+      this.removeEdge(vertext, adjVertext);
+    }
+
+    // after deleting all edges, remove the vertex
+    delete this.adjacencyList[vertext];
+  }
 }
 
 const graph = new Graph();
@@ -55,7 +80,9 @@ graph.addEdge("Keyur", "Manish");
 graph.addEdge("Manish", "Vatsal");
 graph.addEdge("Keyur", "Vatsal");
 
-graph.removeEdge("Keyur", "Manish");
-graph.removeEdge("Keyur", "Vatsal");
+// graph.removeEdge("Keyur", "Manish");
+// graph.removeEdge("Keyur", "Vatsal");
+
+graph.removeVertext("Keyur");
 
 console.log(graph);
